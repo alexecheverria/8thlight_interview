@@ -218,6 +218,3 @@ def addAnotherItem():
 	else:
 		print("Please select a valid option")
 		return addAnotherItem()
-
-
-

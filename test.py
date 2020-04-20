@@ -46,5 +46,3 @@ if __name__ == '__main__':
     [isPrevTrue, URL] = get_inauthor_test(isPrevTrue, URL)
     [data, URL] = sendGET_test(URL)
     addToReadingList_test(data)
-
-   
