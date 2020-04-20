@@ -41,7 +41,7 @@ def get_inauthor(isPrevTrue, URL):
 	URL += inauthor
 	isPrevTrue = True
 	return [isPrevTrue, URL]
-	
+
 # Returns results where the text following this keyword is found in the publisher.
 def get_inpublisher(isPrevTrue, URL):
 	inpublisher = input("\nDoes your title have a specific publisher?\n") 
@@ -175,11 +175,14 @@ def addToReadingList(n, info, append):
 	selection = selection.split(',')
 	confirmed_selections = [0]*n	
 	added_books = ''
+
+	#Create a list of selections, this ensures a double selection only results in 
+	#one added item
 	for i in range(len(selection)):
 		if(selection[i] in ['1','2','3','4','5']):
 			confirmed_selections[int(selection[i])-1] = info[int(selection[i])-1]
 
-	for i in range(len(confirmed_selections)):
+	for i in range(n):
 		if(confirmed_selections[i] != 0):
 			added_books += '---------------------------------------\n'
 			added_books += 'Title: '
@@ -198,7 +201,6 @@ def addToReadingList(n, info, append):
 			else:
 				added_books += confirmed_selections[i][2]
 			added_books += "\n"
-	
 	if(append):
 		reading_list = open("reading_list.log", "a")
 	else:
