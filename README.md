@@ -2,7 +2,7 @@
 
 This codebase is used to create a local reading list using the Google Books API. The code is meant to retreive user inputted queries from the command line and return 5 search results to add to a local reading list. The list is updated as long as the user is running the program. Following termination, the program will output a reading list file. Users can choose to append to this list if they so choose. 
 
-**The following are potential search parameters a user can specify in order to narrow their search.
+**The following are potential search parameters a user can specify in order to narrow their search.**
 1. intitle: Returns results where the text following this keyword is found in the title.
 1. inauthor: Returns results where the text following this keyword is found in the author.
 1. inpublisher: Returns results where the text following this keyword is found in the publisher.
