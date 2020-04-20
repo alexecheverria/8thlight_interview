@@ -27,3 +27,10 @@ After search results are provided, the user can add items to their locally creat
 The user will then be prompted to add more books to their list or exit the program. Their reading list is stored in the generated file, **reading_list.log** 
 
 If the user reruns the program, this file will be overwritten. 
+
+
+NOTE: Please make sure the python libraries 'system' and 'requests' are installed. You can install these libraries on the terminal using:
+
+`pip install system`
+
+`pip install requests`
