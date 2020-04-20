@@ -42,7 +42,7 @@ if __name__ == '__main__':
     data = g_r.getNItems(5, data)
     info = g_r.getInfo(5,data)
     g_r.printInfo(5, info)
-    print(g_r.addToReadingList(5,info))
+    print(g_r.addToReadingList(5,info,False))
 
     #for i in range(10):
     #	print(data['items'][i]['volumeInfo']['title'])

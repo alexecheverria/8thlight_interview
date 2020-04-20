@@ -1,4 +1,7 @@
-#MAC
+# Ignore reading list files
+.log
+
+# MAC
 .DS_STORE
 
 # Byte-compiled / optimized / DLL files

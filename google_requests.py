@@ -1,7 +1,7 @@
 # importing the requests library 
 import requests 
 
-
+# This function asks the user if they would like to search with additional parameters that Google Books provides
 def initialRequest():
 	initialRequest = "\nWhich search parameters do you know?\n"
 	initialRequest += "Please enter digits followed by commas, do not use spaces\n"
@@ -25,16 +25,15 @@ def initialRequest():
 	return [skip, confirmedSearchParameters]
 
 
-
+# Returns results where the text following this keyword is found in the title.
 def get_intitle(isPrevTrue, URL):
-	# Returns results where the text following this keyword is found in the title.
 	intitle = input("\nWhat is the title you are looking for? \n") 
 	URL += intitle
 	isPrevTrue = True
 	return [URL, isPrevTrue]
 
+# Returns results where the text following this keyword is found in the author.
 def get_inauthor(isPrevTrue, URL):
-	# Returns results where the text following this keyword is found in the author.
 	inauthor = input("\nDoes your title have a specific author? \n") 
 	if(isPrevTrue):
 		URL += "+"	
@@ -42,9 +41,8 @@ def get_inauthor(isPrevTrue, URL):
 	URL += inauthor
 	isPrevTrue = True
 	return [URL, isPrevTrue]
-
+# Returns results where the text following this keyword is found in the publisher.
 def get_inpublisher(isPrevTrue, URL):
-	# Returns results where the text following this keyword is found in the publisher.
 	inpublisher = input("\nDoes your title have a specific publisher?\n") 
 	if(isPrevTrue):
 		URL += "+"	
@@ -53,8 +51,8 @@ def get_inpublisher(isPrevTrue, URL):
 	isPrevTrue = True
 	return [URL, isPrevTrue]
 
+# Returns results where the text following this keyword is listed in the category list of the volume.
 def get_subject(isPrevTrue, URL):
-	# Returns results where the text following this keyword is listed in the category list of the volume.
 	subject = input("\nWhat keywords can be used to describe the subject of your title?\n")
 	if(isPrevTrue):
 		URL += "+"	
@@ -63,8 +61,8 @@ def get_subject(isPrevTrue, URL):
 	isPrevTrue = True
 	return [URL, isPrevTrue]
 
+# Returns results where the text following this keyword is the ISBN number.
 def get_isbn(isPrevTrue, URL):
-	# Returns results where the text following this keyword is the ISBN number.
 	isbn = input("\nDo you have your title's ISBN Number?\n")
 	if(isPrevTrue):
 		URL += "+"	
@@ -73,8 +71,8 @@ def get_isbn(isPrevTrue, URL):
 	isPrevTrue = True
 	return [URL, isPrevTrue]
 
+# Returns results where the text following this keyword is the Library of Congress Control Number.
 def get_lccn(isPrevTrue, URL):
-	# Returns results where the text following this keyword is the Library of Congress Control Number.
 	lccn = input("\nDo you have your title's Library of Congress Control Number?\n")
 	if(isPrevTrue):
 		URL += "+"	
@@ -83,8 +81,8 @@ def get_lccn(isPrevTrue, URL):
 	isPrevTrue = True
 	return [URL, isPrevTrue]
 
+# Returns results where the text following this keyword is the Online Computer Library Center Number.
 def get_oclc(isPrevTrue, URL):
-	# Returns results where the text following this keyword is the Online Computer Library Center Number.
 	oclc = input("\nDo you have your title's Online Computer Library Center Number?\n ")
 	if(isPrevTrue):
 		URL += "+"	
@@ -94,7 +92,8 @@ def get_oclc(isPrevTrue, URL):
 	return [URL, isPrevTrue]
 
 
-
+# This function sends a GET request to Google Books and returns with a search result. The result is then
+# parsed in a JSON format
 def sendGET(URL_PARAMS):
 	# api-endpoint 
 	URL = "https://www.googleapis.com/books/v1/volumes?q="
@@ -104,17 +103,21 @@ def sendGET(URL_PARAMS):
 	URL += "&key="
 	URL += API_KEY
 	# sending get request and saving the response as response object 
-	r = requests.get(url = URL)  
+	request_response = requests.get(url = URL)  
 	# extracting data in json format 
-	data = r.json() 
-	return [URL, data]
+	google_books_data = request_response.json() 
+	return [URL, google_books_data]
 
-
+# Function retreives items from Google Books Response data, used for automation in case the user wants
+# more than 5 results at a time
 def getNItems(n,data):
 	return data['items'][:n]
 
+# This function extracts the title, author, and publisher from Google Books data. If a detail is not 
+# listed this function adds a note saying the detail could not be extracted
 def getInfo(n,data):
 	info = [0]*n
+	# 
 	for i in range(n):
 		try:
 			title = data[i]['volumeInfo']['title']
@@ -133,43 +136,74 @@ def getInfo(n,data):
 
 	return info
 
+# This function prints N Google Search Results for the user to choose to add to their Reading List
 def printInfo(n, info):
 	print('Search Results')
 	list_type = type(info)
+	info_output = ''
 	for i in range(n):
-		search_result = '\n'
-		search_result += str(i+1)
-		search_result += '. Title: '
+		info_output += '\n'
+		info_output += str(i+1)
+		info_output += '. Title: '
 		if(type(info[i][0]) == list_type):
-			search_result += ', '.join(info[i][0])
+			info_output += ', '.join(info[i][0])
 		else:
-			search_result += info[i][0]
+			info_output += info[i][0]
 
-		search_result += '\n   Author(s): '
+		info_output += '\n   Author(s): '
 		if(type(info[i][1]) == list_type):
-			search_result += ', '.join(info[i][1])
+			info_output += ', '.join(info[i][1])
 		else:
-			search_result += info[i][1]
-		search_result += '\n   Publisher: '
+			info_output += info[i][1]
+		info_output += '\n   Publisher: '
 		if(type(info[i][2]) == list_type):
-			search_result += ', '.join(info[i][2])
+			info_output += ', '.join(info[i][2])
 		else:
-			search_result += info[i][2]
-		print(search_result)
+			info_output += info[i][2]
+		print(info_output)
+	
 
 
-def addToReadingList(n, info):
+def addToReadingList(n, info, append):
+	list_type = type(info)
 	select_input = "\nWhich selection would you like to add to your reading list? \n"
 	select_input += "Please enter digits followed by commas with no spaces\n"
 	selection = input(select_input)
-	confirmedSelections = [0]*n
-
 	selection = selection.split(',')
-	print(selection)
+	confirmed_selections = [0]*n	
+	added_books = ''
 	for i in range(len(selection)):
 		if(selection[i] in ['1','2','3','4','5']):
-			confirmedSelections[int(selection[i])-1] = info[int(selection[i])-1]
-	return confirmedSelections
+			confirmed_selections[int(selection[i])-1] = info[int(selection[i])-1]
+	confirmed_selections_out_len = 0
+	for i in range(len(confirmed_selections)):
+		if(confirmed_selections[i] != 0):
+			added_books += '---------------------------------------\n'
+			added_books += 'Title: '
+			if(type(confirmed_selections[i][0]) == list_type):
+				added_books += ', '.join(confirmed_selections[i][0])
+			else:
+				added_books += confirmed_selections[i][0]
+
+			added_books += '\nAuthor(s): '
+			if(type(confirmed_selections[i][1]) == list_type):
+				added_books += ', '.join(confirmed_selections[i][1])
+			else:
+				added_books += confirmed_selections[i][1]
+			added_books += '\nPublisher: '
+			if(type(confirmed_selections[i][2]) == list_type):
+				added_books += ', '.join(confirmed_selections[i][2])
+			else:
+				added_books += confirmed_selections[i][2]
+			added_books += "\n"
+	
+	if(append):
+		reading_list = open("reading_list.log", "a")
+	else:
+		reading_list = open("reading_list.log", "w")
+	reading_list.write(added_books)
+	reading_list.close()
+	return added_books
 
 
 
