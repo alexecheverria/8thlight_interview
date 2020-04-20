@@ -163,7 +163,7 @@ def printInfo(n, info):
 			info_output += ', '.join(info[i][2])
 		else:
 			info_output += info[i][2]
-		print(info_output)
+	print(info_output)
 	
 
 
