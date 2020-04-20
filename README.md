@@ -14,7 +14,7 @@ This codebase is used to create a local reading list using the Google Books API.
 
 Instructions: Run the program by entering **python google_books.py**
 
-You will then be prompted to enter which of the search parameters you would like to select. If you would like to skip this step press enter. If you want to use any of these parameters enter a list of numbers with the selection desired. 
+You will then be prompted to enter which of the search parameters you would like to select. If you would like to skip this step press `Enter`. If you want to use any of these parameters enter a list of numbers with the selection desired. 
 
 **Example:**
 
@@ -24,7 +24,7 @@ You will then be prompted a question for each parameter. When you type in your a
 
 After search results are provided, the user can add items to their locally created list by entering a list of numbers similar to the example provided above. 
 
-The user will then be prompted to add more books to their list or exit the program. Their reading list is stored in the generated file, **reading_list.log** 
+The user will then be prompted to add more books to their list or exit the program. Their reading list is stored in the generated file, **googleBooks/reading_list.log** 
 
 If the user reruns the program, this file will be overwritten. 
 
