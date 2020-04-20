@@ -1,4 +1,4 @@
-#Google Books Search and Reading List Creator
+# Google Books Search and Reading List Creator
 
 This codebase is used to create a local reading list using the Google Books API. The code is meant to retreive user inputted queries from the command line and return 5 search results to add to a local reading list. The list is updated as long as the user is running the program. Following termination, the program will output a reading list file. Users can choose to append to this list if they so choose. 
 
